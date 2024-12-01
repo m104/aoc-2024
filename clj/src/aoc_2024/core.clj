@@ -15,17 +15,11 @@
        slurp
        split-lines))
 
-(defn str->int [val] (Integer/parseInt val))
-
 (defn split-by-ws
   [line]
   (split line #"\s+"))
 
-(split-by-ws "123      456")
-
-(-> "123     456"
-    split-by-ws
-    ((partial mapv str->int)))
+(defn str->int [val] (Integer/parseInt val))
 
 (defn invert-map
   [m]

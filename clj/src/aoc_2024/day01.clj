@@ -8,30 +8,23 @@
 
 (defn lines->lists
   [lines]
-  (reduce
-   (fn [[left right] line]
-     (let [[l r] (-> line
-                     split-by-ws
-                     ((partial mapv str->int)))]
-       [(conj left l) (conj right r)]))
-   [[] []]
-   lines))
+  (->> lines
+       (mapv split-by-ws)
+       (mapv (partial mapv str->int))
+       (apply mapv vector)))
 
 (defn lists->distances
-  [left right]
-  (loop [[l & left] (sort left)
-         [r & right] (sort right)
-         distances []]
-    (if (nil? l)
-      distances
-      (recur left right
-             (conj distances (abs (- r l)))))))
+  [lists]
+  (->> lists
+       (mapv sort)
+       (apply mapv (comp abs -))))
 
 (defn part1
   [lines]
-  (let [[left right] (lines->lists lines)
-        distances (lists->distances left right)]
-    (reduce + distances)))
+  (->> lines
+       lines->lists
+       lists->distances
+       (reduce +)))
 
 (println "Part 1 test answer:")
 (println (part1 test-lines))
@@ -39,17 +32,18 @@
 (println "Part 1 answer:")
 (println (part1 lines))
 
+(defn lists->similarities
+  [[ids tally]]
+  (let [rfreq (frequencies tally)]
+    (->> ids
+         (mapv #(* % (get rfreq % 0))))))
 
 (defn part2
   [lines]
-  (let [[ids right] (lines->lists lines)
-        rfreq (frequencies right)]
-    (reduce
-     (fn [similarity id]
-       (+ similarity
-          (* id (get rfreq id 0))))
-     0
-     ids)))
+  (->> lines
+       lines->lists
+       lists->similarities
+       (reduce +)))
 
 (println "Part 2 test answer:")
 (println (part2 test-lines))
