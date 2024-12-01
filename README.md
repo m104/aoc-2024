@@ -1,17 +1,14 @@
-# aoc-clj
+# aoc-2024
 
-## Usage
+Starting with Clojure and then maybe Zig as well :)
 
-```sh
-java -jar target/uberjar/aoc-clj-0.1.0-SNAPSHOT-standalone.jar [args]
-```
 
 ## License
 
 ```
 MIT License
 
-Copyright (c) 2021 Adam Collins
+Copyright (c) 2024 Adam Collins
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
