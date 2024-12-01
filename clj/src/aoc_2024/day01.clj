@@ -1,6 +1,8 @@
 (ns aoc-2024.day01
   (:require [aoc-2024.core :refer [load-lines split-by-ws str->int]]))
 
+; https://adventofcode.com/2024/day/1
+
 (def test-lines (load-lines "day01-test.txt"))
 (def lines (load-lines "day01.txt"))
 
@@ -37,3 +39,20 @@
 (println "Part 1 answer:")
 (println (part1 lines))
 
+
+(defn part2
+  [lines]
+  (let [[ids right] (lines->lists lines)
+        rfreq (frequencies right)]
+    (reduce
+     (fn [similarity id]
+       (+ similarity
+          (* id (get rfreq id 0))))
+     0
+     ids)))
+
+(println "Part 2 test answer:")
+(println (part2 test-lines))
+
+(println "Part 2 answer:")
+(println (part2 lines))
