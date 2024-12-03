@@ -27,11 +27,11 @@
   (let [pattern #"mul\((\d+),(\d+)\)|(do)\(\)|(don't)\(\)"
         matches (re-seq pattern s)]
     (mapv
-     (fn [[_ x y enable disable]]
+     (fn [[_ x y d dn]]
        (cond
          (and (some? x) (some? y)) ["mul" (str->int x) (str->int y)]
-         enable ["enable"]
-         disable ["disable"]))
+         d ["do"]
+         dn ["don't"]))
      matches)))
 
 (defn process
@@ -44,8 +44,8 @@
                      (+ result (* x y))
                      result)
                    enabled ops)
-      "enable" (recur result true ops)
-      "disable" (recur result false ops)
+      "do" (recur result true ops)
+      "don't" (recur result false ops)
       nil result)))
 
 (defn part2

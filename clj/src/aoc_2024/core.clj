@@ -5,100 +5,95 @@
 (def template
   {:title ""
    :description ""
-   :comments nil
-   :test-answers []
-   :answers []})
+   :comments []
+   :answers [{:test nil :submit nil}
+             {:test nil :submit nil}]})
 
 (def days
   {1 {:title "Historian Hysteria"
       :description "sorted lists -> frequency list"
-      :comments nil
-      :test-answers [11 31]
-      :answers [1889772 23228917]}
+      :comments []
+      :answers [{:test 11 :submit 1889772}
+                {:test 31 :submit 23228917}]}
    2 {:title "Red-Nosed Reports"
-      :description "reactor reports -> reports with up to one redaction"
-      :comments nil
-      :test-answers [2 4]
-      :answers [332 398]}
+      :description "reactor reports -> reports redactions"
+      :comments ["Struggled with debugging a delta list"
+                 "Reverted to brute force"
+                 "May resume with a transducer"]
+      :answers [{:test 2 :submit 332}
+                {:test 4 :submit 398}]}
    3 {:title "Mull It Over"
-      :description ""
-      :comments nil
-      :test-answers [161 48]
-      :answers [166357705 88811886]}})
+      :description "parse instructions -> small state machine"
+      :comments []
+      :answers [{:test 161 :submit 166357705}
+                {:test2 48 :submit 88811886}]}})
 
-(defn unload-day-ns
+(defn unload-solution-ns
   [day]
   (let [ns-str (format "aoc-2024.day%02d" day)]
     (remove-ns (symbol ns-str))))
 
-(defn load-day-ns
+(defn load-solution-ns
   [day]
   (let [filename (format "src/aoc_2024/day%02d.clj" day)]
     (load-file filename)))
 
-(defn reload-days
+(defn reload-solutions
   []
   (doseq [day (keys days)]
-    (unload-day-ns day)
-    (load-day-ns day)))
+    (unload-solution-ns day)
+    (load-solution-ns day)))
 
-(defn lines-for-day
-  ([day] (lines-for-day day false))
-  ([day test?]
+(defn input-for-day
+  ([day variation]
    (let [filename (str (format "day%02d" day)
-                       (when test? "-test")
+                       (when (not= :submit variation)
+                         (str "-" (name variation)))
                        ".txt")]
      (load-lines filename))))
 
 (defn run-trial
-  [day part test?]
+  [day part variation]
   (let [ns-str (str "aoc-2024.day" (format "%02d" day))
         f (resolve (symbol ns-str (str "part" part)))
-        input (lines-for-day day test?)
+        input (input-for-day day variation)
         output (f input)
-        expected (nth (get-in days [day (if test? :test-answers :answers)])
-                      (dec part))
+        answers (get-in days [day :answers])
+        expected (get (nth answers (dec part)) variation)
         ok (= output expected)]
     {:day day
      :part part
-     :test test?
+     :variation variation
      :output output
      :expected expected
      :ok ok}))
 
 (defn report-trial
-  [day part test?]
-  (let [{:keys [ok output expected]} (run-trial day part test?)]
-    (if ok "✅ " "❌ ")))
+  [day part variation]
+  (let [{:keys [ok output expected]} (run-trial day part variation)]
+    (if ok
+      (str "✅ output: " output)
+      (str "❌ output: " output " expected: " expected))))
 
 (defn -main
   [& _]
-  (reload-days)
-  (doseq [[day {:keys [title test-answers answers]}] days]
-    (let [test-count (count test-answers)
-          answer-count (count answers)]
-      (println (str "[" (format "%02d" day) "] " title " (" test-count "/" answer-count ")"))
-      (print "  part1: ")
-      (if (>= test-count 1)
-        (print (report-trial day 1 true))
-        (print "-  "))
-      (if (>= answer-count 1)
-        (print (report-trial day 1 false))
-        (print "-  "))
-      (println)
-      (print "  part2: ")
-      (if (>= test-count 2)
-        (print (report-trial day 2 true))
-        (print "-  "))
-      (if (>= answer-count 2)
-        (print (report-trial day 2 false))
-        (print "-  "))
-      (println))))
+  (reload-solutions)
+  (println "Advent of Code, 2024")
+  (println)
+  (doseq [[day {:keys [title answers]}] days]
+    (println (str "day" (format "%02d" day) " - " title))
+    (doseq [part (mapv inc (range 0 (count answers)))]
+      (println (str "  part" part ":"))
+      (doseq [[variation _] (nth answers (dec part))]
+        (print (format "    %6s: " (name variation)))
+        (print (report-trial day part variation))
+        (println)))
+    (println)))
 
-(defn run-repl-trial
-  [day part test?]
-  (unload-day-ns day)
-  (load-day-ns day)
-  (run-trial day part test?))
+;; (defn run-repl-trial
+;;   [day part variation]
+;;   (unload-solution-ns day)
+;;   (load-solution-ns day)
+;;   (run-trial day part variation))
 
-;; (run-repl-trial 1 1 true)
+;; (run-repl-trial 1 1 :test)
