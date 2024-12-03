@@ -1,0 +1,64 @@
+(ns aoc-2024.day03
+  (:require [aoc-2024.helpers :refer [load-lines str->int]]
+            [clojure.string :refer [join]]))
+
+(def mul-pattern #"mul\((\d+),(\d+)\)")
+
+(re-seq mul-pattern "mul(4,5)")
+(re-seq mul-pattern "mul(4,5)weklfajwel;mul(1,2)")
+
+(defn str->mul-pairs
+  [s]
+  (let [mul-pattern #"mul\((\d+),(\d+)\)"
+        matches (re-seq mul-pattern s)]
+    (mapv
+     (fn [[_ x y]]
+       [(str->int x) (str->int y)])
+     matches)))
+
+(defn part1
+  [lines]
+  (->> lines
+       (join "")
+       str->mul-pairs
+       (mapv #(apply * %))
+       (reduce +)))
+
+;(part1 (load-lines "day03-test.txt"))
+;(part1 (load-lines "day03.txt"))
+
+(defn str->instructions
+  [s]
+  (let [pattern #"mul\((\d+),(\d+)\)|(do)\(\)|(don't)\(\)"
+        matches (re-seq pattern s)]
+    (mapv
+     (fn [[_ x y enable disable]]
+       (cond
+         (and (some? x) (some? y)) ["mul" (str->int x) (str->int y)]
+         enable ["enable"]
+         disable ["disable"]))
+     matches)))
+
+(defn process
+  [ops]
+  (loop [result 0
+         enabled true
+         [[op x y] & ops] ops]
+    (case op
+      "mul" (recur (if enabled
+                     (+ result (* x y))
+                     result)
+                   enabled ops)
+      "enable" (recur result true ops)
+      "disable" (recur result false ops)
+      nil result)))
+
+(defn part2
+  [lines]
+  (->> lines
+       (join "")
+       str->instructions
+       process))
+
+;(part2 (load-lines "day03-test2.txt"))
+;(part2 (load-lines "day03.txt"))

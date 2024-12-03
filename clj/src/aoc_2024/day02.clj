@@ -1,10 +1,7 @@
 (ns aoc-2024.day02
-  (:require [aoc-2024.core :refer [load-lines split-by-ws str->int]]))
+  (:require [aoc-2024.helpers :refer [load-lines split-by-ws str->int]]))
 
 ; https://adventofcode.com/2024/day/2
-
-(def test-lines (load-lines "day02-test.txt"))
-(def lines (load-lines "day02.txt"))
 
 (defn lines->reports
   [lines]
@@ -34,11 +31,8 @@
        (filterv safe-report?)
        count))
 
-(println "Part 1 test answer:")
-(println (part1 test-lines))
-
-(println "Part 1 answer:")
-(println (part1 lines))
+;(part1 (load-lines "day02-test.txt"))
+;(part1 (load-lines "day02.txt"))
 
 (defn elided-set
   [levels]
@@ -83,8 +77,5 @@
        (filterv almost-valid-report)
        count))
 
-(println "Part 2 test answer:")
-(println (part2 test-lines))
-
-(println "Part 2 answer:")
-(println (part2 lines))
+;(part2 (load-lines "day02-test.txt"))
+;(part2 (load-lines "day02.txt"))
