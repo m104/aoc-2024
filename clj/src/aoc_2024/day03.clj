@@ -2,15 +2,10 @@
   (:require [aoc-2024.helpers :refer [load-lines str->int]]
             [clojure.string :refer [join]]))
 
-(def mul-pattern #"mul\((\d+),(\d+)\)")
-
-(re-seq mul-pattern "mul(4,5)")
-(re-seq mul-pattern "mul(4,5)weklfajwel;mul(1,2)")
-
 (defn str->mul-pairs
   [s]
-  (let [mul-pattern #"mul\((\d+),(\d+)\)"
-        matches (re-seq mul-pattern s)]
+  (let [pattern #"mul\((\d+),(\d+)\)"
+        matches (re-seq pattern s)]
     (mapv
      (fn [[_ x y]]
        [(str->int x) (str->int y)])
