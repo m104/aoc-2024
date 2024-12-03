@@ -1,5 +1,6 @@
 (ns aoc-2024.core
-  (:require [aoc-2024.helpers :refer [load-lines]])
+  (:require [aoc-2024.helpers :refer [load-lines]]
+            [criterium.core :refer [quick-benchmark]])
   (:gen-class))
 
 (def template
@@ -58,6 +59,7 @@
         f (resolve (symbol ns-str (str "part" part)))
         input (input-for-day day variation)
         output (f input)
+        ;bench (quick-benchmark (f input) {})
         answers (get-in days [day :answers])
         expected (get (nth answers (dec part)) variation)
         ok (= output expected)]
@@ -90,10 +92,14 @@
         (println)))
     (println)))
 
-;; (defn run-repl-trial
-;;   [day part variation]
-;;   (unload-solution-ns day)
-;;   (load-solution-ns day)
-;;   (run-trial day part variation))
+(comment
+  (defn run-repl-trial
+    [day part variation]
+    (unload-solution-ns day)
+    (load-solution-ns day)
+    (run-trial day part variation))
 
-;; (run-repl-trial 1 1 :test)
+  (run-repl-trial 1 1 :test)
+
+  ;
+  )
