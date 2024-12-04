@@ -17,7 +17,7 @@
       :answers [{:test 11 :submit 1889772}
                 {:test 31 :submit 23228917}]}
    2 {:title "Red-Nosed Reports"
-      :description "reactor reports -> reports redactions"
+      :description "reactor reports -> report redactions"
       :comments ["Struggled with debugging a delta list"
                  "Reverted to brute force"
                  "May resume with a transducer"]
@@ -29,8 +29,11 @@
       :answers [{:test 161 :submit 166357705}
                 {:test2 48 :submit 88811886}]}
    4 {:title "Ceres Search"
-      :description ""
-      :comments []
+      :description "word search -> combined word search"
+      :comments ["Fun intro grid search problem"
+                 "Got super lucky by returning the coords and dirs in part1"
+                 "Part 2 head scratcher: only need to search 4 directions"
+                 "Reworked to avoid searching some fruitless directions"]
       :answers [{:test 18 :submit 2613}
                 {:test 9 :submit 1905}]}})
 
