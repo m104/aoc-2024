@@ -47,6 +47,10 @@
      directions)))
 
 (defn search-grid
+  "Search the grid for the string, in the given directions.
+
+   Returns a vector of [x y [dx dy]] values corresponding to the
+   start of each match string and the direction of the match."
   [string directions {:keys [width height] :as grid}]
   (let [chars (into [] string)]
     (->> (for [x (range 0 width)
@@ -75,10 +79,13 @@
   (->> lines
        lines->grid
        (search-grid "MAS" x-directions)
+       ; increment each match by one directional grid position
+       ; e.g. starting from "M", move to "A" position
        (mapv (fn [[x y [dx dy]]]
                [(+ x dx) (+ y dy)]))
+       ; gather up matching "A" grid positions
        frequencies
-       (into [])
+       ; only count "A" positions that have a match
        (filterv (comp #(= 2 %) second))
        count))
 
