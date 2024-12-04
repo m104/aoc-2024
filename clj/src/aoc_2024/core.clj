@@ -27,7 +27,12 @@
       :description "parse instructions -> small state machine"
       :comments []
       :answers [{:test 161 :submit 166357705}
-                {:test2 48 :submit 88811886}]}})
+                {:test2 48 :submit 88811886}]}
+   4 {:title "Ceres Search"
+      :description ""
+      :comments []
+      :answers [{:test 18 :submit 2613}
+                {:test 9 :submit 1905}]}})
 
 (defn unload-solution-ns
   [day]
@@ -100,6 +105,5 @@
     (run-trial day part variation))
 
   (run-repl-trial 1 1 :test)
-
   ;
   )
