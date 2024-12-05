@@ -60,8 +60,7 @@
 (defn sort-page-list
   [page-list restrictions]
   (->> page-list
-       (sort-by identity
-                #(contains? (get restrictions %2) %1))
+       (sort #(contains? (get restrictions %2) %1))
        (into [])))
 
 (defn lines->fixed-updates
