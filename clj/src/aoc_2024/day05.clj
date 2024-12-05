@@ -54,8 +54,8 @@
        (mapv middle-page)
        (reduce +)))
 
-(part1 (load-lines "day05-test.txt"))
-(part1 (load-lines "day05.txt"))
+;(part1 (load-lines "day05-test.txt"))
+;(part1 (load-lines "day05.txt"))
 
 (defn sort-page-list
   [page-list restrictions]
@@ -80,5 +80,5 @@
        (mapv middle-page)
        (reduce +)))
 
-(part2 (load-lines "day05-test.txt"))
-(part2 (load-lines "day05.txt"))
+;(part2 (load-lines "day05-test.txt"))
+;(part2 (load-lines "day05.txt"))
