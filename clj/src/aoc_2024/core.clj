@@ -35,7 +35,14 @@
                  "Part 2 head scratcher: only need to search 4 directions"
                  "Reworked to avoid searching some fruitless directions"]
       :answers [{:test 18 :submit 2613}
-                {:test 9 :submit 1905}]}})
+                {:test 9 :submit 1905}]}
+   5 {:title "Print Queue"
+      :description "page orderings -> page reorderings"
+      :comments []
+      :answers [{:test 143 :submit 5329}
+                {:test 123 :submit 5833}]}
+   ;
+   })
 
 (defn unload-solution-ns
   [day]
