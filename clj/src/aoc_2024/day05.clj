@@ -21,27 +21,24 @@
          updates []]
     (if (nil? line)
       updates
-      (recur lines
-             (conj updates
-                   (mapv str->int (split line #",")))))))
+      (recur lines (->> (split line #",")
+                        (mapv str->int)
+                        (conj updates))))))
 
-(defn first-broken-rule
-  [pages restrictions]
+(defn valid-ordering?
+  [restrictions pages]
   (loop [[page & pages] pages
          seen #{}]
-    (when page
-      (let [invalid-page (some #(when (contains? seen %) %) (get restrictions page))]
-        (if invalid-page
-          [invalid-page page]
-          (recur pages (conj seen page)))))))
+    (cond (nil? page) true
+          (some #(when (contains? seen %) %) (get restrictions page)) false
+          :else (recur pages (conj seen page)))))
 
 (defn lines->valid-updates
   [lines]
   (let [{:keys [restrictions skip]} (lines->ordering-restrictions lines)
         lines (subvec lines skip)
         page-lists (lines->page-lists lines)]
-    (filterv #(nil? (first-broken-rule % restrictions))
-             page-lists)))
+    (filterv #(valid-ordering? restrictions %) page-lists)))
 
 (defn middle-page
   [pages]
@@ -68,7 +65,7 @@
   (let [{:keys [restrictions skip]} (lines->ordering-restrictions lines)
         lines (subvec lines skip)
         page-lists (lines->page-lists lines)
-        invalid-lists (filterv #(first-broken-rule % restrictions)
+        invalid-lists (filterv #(not (valid-ordering? restrictions %))
                                page-lists)]
     (mapv #(sort-page-list % restrictions) invalid-lists)))
 
