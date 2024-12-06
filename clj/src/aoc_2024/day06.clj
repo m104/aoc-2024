@@ -38,11 +38,20 @@
   [grid]
   (loop [grid grid
          guard-coords (get-starting-pos grid)
-         dirs (cycle directions)]
+         dirs (cycle directions)
+         turns #{}]
     (let [[dir & dirs] dirs
           {:keys [grid guard-coords]} (walk-guard-forward grid guard-coords dir)]
-      (if guard-coords
-        (recur grid guard-coords dirs)
+      ;(report-grid grid)
+      (cond
+        ; cycle detection
+        (contains? turns [guard-coords dir])
+        grid
+        ; hit an obstacle
+        guard-coords
+        (recur grid guard-coords dirs (conj turns [guard-coords dir]))
+        ; outside of the grid
+        :else
         grid))))
 
 (defn part1
