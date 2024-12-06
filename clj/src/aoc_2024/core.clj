@@ -44,6 +44,11 @@
                  "Realized this was just sorting after taking a brute force approach"]
       :answers [{:test 143 :submit 5329}
                 {:test 123 :submit 5833}]}
+   6 {:title "Guard Gallivant"
+      :description "grid walk + check -> "
+      :comments []
+      :answers [{:test 41 :submit 4696}
+                {:test nil :submit nil}]}
    ;
    })
 

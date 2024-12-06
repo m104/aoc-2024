@@ -1,46 +1,27 @@
 (ns aoc-2024.day04
-  (:require [aoc-2024.helpers :refer [load-lines]]))
-
-(defn lines->grid
-  [lines]
-  (let [height (count lines)
-        width (count (into [] (first lines)))
-        data (->> lines
-                  (map #(into [] %))
-                  (apply concat)
-                  (into []))]
-    {:width width
-     :height height
-     :data data}))
-
-(defn get-in-grid
-  [x y {:keys [data width height]}]
-  (when (and (<= 0 x (dec width))
-             (<= 0 y (dec height)))
-    (let [idx (+ x (* y width))]
-      (nth data idx))))
+  (:require [aoc-2024.helpers :refer [load-lines lines->grid get-in-grid]]))
 
 (def all-directions
   ; [[dx dy] ...]
   [[0 -1] [1 -1] [1 0] [1 1] [0 1] [-1 1] [-1 0] [-1 -1]])
 
 (defn match-chars?
-  [x y [dx dy] chars grid]
+  [grid x y [dx dy] chars]
   (loop [[element & r] chars
          x x
          y y]
     (if (nil? element)
       true
-      (if (= element (get-in-grid x y grid))
+      (if (= element (get-in-grid grid x y))
         (recur r (+ x dx) (+ y dy))
         false))))
 
 (defn direction-search
-  [x y directions chars grid]
-  (when (= (first chars) (get-in-grid x y grid))
+  [grid x y directions chars]
+  (when (= (first chars) (get-in-grid grid x y))
     (reduce
      (fn [matches dir]
-       (if (match-chars? x y dir chars grid)
+       (if (match-chars? grid x y dir chars)
          (conj matches [x y dir])
          matches))
      []
@@ -55,7 +36,7 @@
   (let [chars (into [] string)]
     (->> (for [x (range 0 width)
                y (range 0 height)]
-           (direction-search x y directions chars grid))
+           (direction-search grid x y directions chars))
          (filterv some?)
          (apply concat)
          (into []))))
