@@ -12,64 +12,95 @@
         y (quot idx height)]
     [x y]))
 
-(defn walk-guard-forward
+(defn try-guard-walk
   [grid guard-coords dir]
-  (loop [{:keys [width height] :as grid} grid
-         [x y] guard-coords]
-    (let [[dx dy] dir
-          next-x (+ x dx)
-          next-y (+ y dy)]
-      (cond
-        ; out of the frame
-        (not (and (< -1 next-x width)
-                  (< -1 next-y height)))
-        {:grid (set-in-grid grid x y \X) :guard-coords nil}
-        ; hit a wall
-        (= \# (get-in-grid grid next-x next-y))
-        {:grid grid :guard-coords [x y]}
-        ; successfully moved
-        :else
-        (recur (-> grid
-                   (set-in-grid x y \X)
-                   (set-in-grid next-x next-y \^))
-               [next-x next-y])))))
+  (let [{:keys [width height] :as grid} grid
+        [x y] guard-coords
+        [dx dy] dir
+        next-x (+ x dx)
+        next-y (+ y dy)]
+    (cond
+      ; out of the frame
+      (not (and (< -1 next-x width)
+                (< -1 next-y height)))
+      {:grid (set-in-grid grid x y \X) :outcome :outside}
+      ; hit an obstacle
+      (= \# (get-in-grid grid next-x next-y))
+      {:grid grid :guard-coords [x y] :outcome :obstacle}
+      ; successfully moved
+      :else
+      {:grid (-> grid
+                 (set-in-grid x y \X)
+                 (set-in-grid next-x next-y \^))
+       :guard-coords [next-x next-y]
+       :outcome :forward})))
 
-(defn walk-guard
+(defn guard-walk
   [grid]
   (loop [grid grid
          guard-coords (get-starting-pos grid)
          dirs (cycle directions)
-         turns #{}]
-    (let [[dir & dirs] dirs
-          {:keys [grid guard-coords]} (walk-guard-forward grid guard-coords dir)]
-      ;(report-grid grid)
+         turns #{}
+         iter 0]
+    (let [dir (first dirs)
+          {:keys [grid guard-coords outcome]} (try-guard-walk grid guard-coords dir)]
       (cond
+        ; be reasonable
+        (= 10000 iter)
+        {:grid grid :outcome :safety}
         ; cycle detection
         (contains? turns [guard-coords dir])
-        grid
-        ; hit an obstacle
-        guard-coords
-        (recur grid guard-coords dirs (conj turns [guard-coords dir]))
+        {:grid grid :outcome :loop}
         ; outside of the grid
+        (= outcome :outside)
+        {:grid grid :outcome :outside}
+        ; hit an obstacle
+        (= outcome :obstacle)
+        (recur grid guard-coords (next dirs) (conj turns [guard-coords dir]) (inc iter))
+        ; walking forward
         :else
-        grid))))
+        (recur grid guard-coords dirs turns (inc iter))))))
 
 (defn part1
   [lines]
   (->> lines
        lines->grid
-       walk-guard
+       guard-walk
+       :grid
        :data
        (filterv #(= % \X))
        count))
 
-(part1 (load-lines "day06-test.txt"))
-(part1 (load-lines "day06.txt"))
+;(part1 (load-lines "day06-test.txt"))
+;(part1 (load-lines "day06.txt"))
+
+(defn find-walked
+  [grid]
+  (let [{:keys [width height]} grid
+        coords (for [y (range 0 height)
+                     x (range 0 width)]
+                 [x y])]
+    (filterv
+     #(= \X (get-in-grid grid (first %) (second %)))
+     coords)))
 
 (defn part2
   [lines]
-  (->> lines
-       count))
+  (let [grid (lines->grid lines)
+        guard-coords (get-starting-pos grid)
+        walked (guard-walk grid)
+        walked-grid (:grid walked)
+        walked-coordinates (->> walked-grid
+                                find-walked
+                                (filterv #(not (= % guard-coords))))]
+    (count (filterv
+            (fn [[x y]]
+              (-> grid
+                  (set-in-grid x y \#)
+                  guard-walk
+                  :outcome
+                  (= :loop)))
+            walked-coordinates))))
 
 ;(part2 (load-lines "day06-test.txt"))
 ;(part2 (load-lines "day06.txt"))

@@ -45,10 +45,10 @@
       :answers [{:test 143 :submit 5329}
                 {:test 123 :submit 5833}]}
    6 {:title "Guard Gallivant"
-      :description "grid walk + check -> "
-      :comments []
+      :description "grid walk + check -> grid loop testing"
+      :comments [""]
       :answers [{:test 41 :submit 4696}
-                {:test nil :submit nil}]}
+                {:test 6 :submit 1443}]}
    ;
    })
 
