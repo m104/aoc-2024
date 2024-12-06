@@ -38,7 +38,10 @@
                 {:test 9 :submit 1905}]}
    5 {:title "Print Queue"
       :description "page orderings -> page reorderings"
-      :comments []
+      :comments ["Started with a basic 'did not already see' restriction list"
+                 "Straightforward to validate the page lists"
+                 "Tried a more complicated fix method for part 2"
+                 "Realized this was just sorting after taking a brute force approach"]
       :answers [{:test 143 :submit 5329}
                 {:test 123 :submit 5833}]}
    ;
