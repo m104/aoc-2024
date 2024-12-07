@@ -52,8 +52,8 @@
    7 {:title "Bridge Repair"
       :description "reverse calc -> extended reverse calc"
       :comments []
-      :answers [{:test 3749N :submit 2299996598890N}
-                {:test 11387N :submit 362646859298554N}]}
+      :answers [{:test 3749 :submit 2299996598890}
+                {:test 11387 :submit 362646859298554}]}
    ;
    })
 

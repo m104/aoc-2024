@@ -12,7 +12,7 @@
   (let [[answer & components]
         (->> line
              split-by-ws
-             (mapv (comp bigint (fn [s] (replace s ":" "")))))]
+             (mapv (comp parse-long (fn [s] (replace s ":" "")))))]
     {:answer answer :components components}))
 
 (defn calculation
@@ -48,7 +48,7 @@
 
 (defn cat-numbers
   [x y]
-  (bigint (str x y)))
+  (parse-long (str x y)))
 
 (def expaneded-ops-by-name
   {"mult" *
@@ -66,4 +66,4 @@
        (reduce +)))
 
 ;(part2 (load-lines "day07-test.txt"))
-;(time (part2 (load-lines "day07.txt")))
+;(part2 (load-lines "day07.txt"))
