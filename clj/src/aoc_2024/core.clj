@@ -46,9 +46,14 @@
                 {:test 123 :submit 5833}]}
    6 {:title "Guard Gallivant"
       :description "grid walk + check -> grid loop testing"
-      :comments [""]
+      :comments []
       :answers [{:test 41 :submit 4696}
                 {:test 6 :submit 1443}]}
+   7 {:title "Bridge Repair"
+      :description "reverse calc -> extended reverse calc"
+      :comments []
+      :answers [{:test 3749N :submit 2299996598890N}
+                {:test 11387N :submit 362646859298554N}]}
    ;
    })
 
