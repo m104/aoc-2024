@@ -39,17 +39,21 @@
                 {:test 123 :submit 5833}]}
    6 {:title "Guard Gallivant"
       :description "grid walk + check -> grid loop testing"
-      :comments []
+      :comments ["Struggled a lot with part2, specifically the runtime"
+                 "Should refactor with a more efficient grid data structure"]
       :answers [{:test 41 :submit 4696}
                 {:test 6 :submit 1443}]}
    7 {:title "Bridge Repair"
       :description "reverse calc -> extended reverse calc"
-      :comments []
+      :comments ["Part 2 kinda hurt"
+                 "Should re-approach with a reverse calculation"]
       :answers [{:test 3749 :submit 2299996598890}
                 {:test 11387 :submit 362646859298554}]}
    8 {:title "Resonant Collinearity"
       :description "closest antinodes -> all antinodes"
-      :comments []
+      :comments ["Pretty straightforward: just run out the deltas on each coord pair"
+                 "Part 2 forced some code cleanup"
+                 "This would be fun to revisit with a clean generator fn"]
       :answers [{:test 14 :submit 289}
                 {:test 34 :submit 1030}]}
    ;
