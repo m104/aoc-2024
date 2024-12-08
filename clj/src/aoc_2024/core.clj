@@ -47,11 +47,11 @@
       :comments []
       :answers [{:test 3749 :submit 2299996598890}
                 {:test 11387 :submit 362646859298554}]}
-   8 {:title ""
-      :description ""
+   8 {:title "Resonant Collinearity"
+      :description "closest antinodes -> all antinodes"
       :comments []
-      :answers [{:test nil :submit nil}
-                {:test nil :submit nil}]}
+      :answers [{:test 14 :submit 289}
+                {:test 34 :submit 1030}]}
    ;
    })
 
