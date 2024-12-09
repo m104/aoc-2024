@@ -56,6 +56,13 @@
                  "This would be fun to revisit with a clean generator fn"]
       :answers [{:test 14 :submit 289}
                 {:test 34 :submit 1030}]}
+   9 {:title "Disk Fragmenter"
+      :description "defrag blocks + checksum -> defrag files + checksum"
+      :comments ["Part 1 not so bad by expanding the blocks"
+                 "Got stuck managing the free space lists"
+                 "Part 2 may have been better with a tree"]
+      :answers [{:test 1928 :submit 6463499258318}
+                {:test 2858 :submit 6493634986625}]}
    ;
    })
 

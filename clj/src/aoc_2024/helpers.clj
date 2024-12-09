@@ -47,7 +47,7 @@
   (let [height (count lines)
         width (count (into [] (first lines)))
         data (->> lines
-                  (map #(into [] %))
+                  (mapv #(into [] %))
                   (apply concat)
                   (into []))]
     {:width width
