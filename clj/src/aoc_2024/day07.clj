@@ -1,6 +1,6 @@
 (ns aoc-2024.day07
   (:require [aoc-2024.helpers :refer [load-lines split-by-ws]]
-            [clojure.string :refer [replace]]
+            [clojure.string :as string]
             [clojure.math.combinatorics :refer [selections]]))
 
 (def ops-by-name
@@ -12,7 +12,7 @@
   (let [[answer & components]
         (->> line
              split-by-ws
-             (mapv (comp parse-long (fn [s] (replace s ":" "")))))]
+             (mapv (comp parse-long (fn [s] (string/replace s ":" "")))))]
     {:answer answer :components components}))
 
 (defn calculation

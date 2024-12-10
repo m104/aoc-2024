@@ -63,6 +63,11 @@
                  "Part 2 may have been better with a tree"]
       :answers [{:test 1928 :submit 6463499258318}
                 {:test 2858 :submit 6493634986625}]}
+   10 {:title ""
+       :description ""
+       :comments []
+       :answers [{:test nil :submit nil}
+                 {:test nil :submit nil}]}
    ;
    })
 
@@ -101,41 +106,53 @@
   (let [ns-str (str "aoc-2024.day" (format "%02d" day))
         f (resolve (symbol ns-str (str "part" part)))
         input (input-for-day day variation)
+        start-ts (. System (nanoTime))
         output (f input)
-        ;bench (quick-benchmark (f input) {})
+        ms (int (/ (double (- (. System (nanoTime)) start-ts)) 1000000.0))
         answers (get-in problems-by-day [day :answers])
         expected (get (nth answers (dec part)) variation)
-        ok (= output expected)]
+        ok (= output expected)
+        [seconds ms] [(quot ms 1000) (rem ms 1000)]
+        [minutes seconds] [(quot seconds 60) (rem seconds 60)]]
     {:day day
      :part part
      :variation variation
+     :time [minutes seconds ms]
      :output output
      :expected expected
      :ok ok}))
 
+(let [ms (int 65078.56)
+      [seconds ms] [(quot ms 1000) (rem ms 1000)]
+      [minutes seconds] [(quot seconds 60) (rem seconds 60)]]
+  [minutes seconds ms])
+
 (defn report-trial
   [day part variation]
-  (let [{:keys [ok output expected]} (run-trial day part variation)]
+  (let [{:keys [ok output expected time]} (run-trial day part variation)
+        [minutes seconds ms] time
+        time-str (format "(%02d:%02d.%03d)" minutes seconds ms)]
     (if ok
-      (str "✅ output: " output)
-      (str "❌ output: " output " expected: " expected))))
+      (str "✅ output: " output " " time-str)
+      (str "❌ output: " output " expected: " expected " " time-str))))
 
 (defn -main
   [& args]
   (let [days (if args
                [(str->int (first args))]
-               (keys problems-by-day))]
+               (sort (keys problems-by-day)))]
     (doseq [day days] (reload-solutions day))
     (println "Advent of Code, 2024")
     (println)
-    (doseq [[day {:keys [title answers]}] (select-keys problems-by-day days)]
-      (println (str "day" (format "%02d" day) " - " title))
-      (doseq [part (mapv inc (range 0 (count answers)))]
-        (println (str "  part" part ":"))
-        (doseq [[variation _] (nth answers (dec part))]
-          (print (format "    %6s: " (name variation)))
-          (print (report-trial day part variation))
-          (println)))
+    (doseq [day days]
+      (let [{:keys [title answers]} (get problems-by-day day)]
+        (println (str "day" (format "%02d" day) " - " title))
+        (doseq [part (mapv inc (range 0 (count answers)))]
+          (println (str "  part" part ":"))
+          (doseq [[variation _] (nth answers (dec part))]
+            (print (format "    %6s: " (name variation)))
+            (print (report-trial day part variation))
+            (println))))
       (println))))
 
 (comment
