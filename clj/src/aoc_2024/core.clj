@@ -63,11 +63,12 @@
                  "Part 2 may have been better with a tree"]
       :answers [{:test 1928 :submit 6463499258318}
                 {:test 2858 :submit 6493634986625}]}
-   10 {:title ""
-       :description ""
-       :comments []
-       :answers [{:test nil :submit nil}
-                 {:test nil :submit nil}]}
+   10 {:title "Hoof It"
+       :description "unique path destinations -> unique paths"
+       :comments ["Part 1: fun with recursive nagivation"
+                  "Part 2: simple tweak to reducing the path info"]
+       :answers [{:test 36 :submit 624}
+                 {:test 81 :submit 1483}]}
    ;
    })
 

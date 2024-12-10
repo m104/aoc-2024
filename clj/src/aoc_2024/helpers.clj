@@ -76,3 +76,8 @@
         (print (str (get-in-grid grid x y) " ")))
       (println)))
   (println ""))
+
+(defn idx->coord
+  [width idx]
+  [(rem idx width)
+   (quot idx width)])

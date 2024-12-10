@@ -1,5 +1,5 @@
 (ns aoc-2024.day08
-  (:require [aoc-2024.helpers :refer [load-lines lines->grid]]
+  (:require [aoc-2024.helpers :refer [load-lines lines->grid idx->coord]]
             [clojure.math.combinatorics :as m]))
 
 ; Antinodes
@@ -9,11 +9,6 @@
 ;       A -> B + dAB ( + dAB ...)
 ;       B -> A + dBA ( + dBA ...)
 ; count unique locations
-
-(defn idx->coord
-  [idx width]
-  [(rem idx width)
-   (quot idx width)])
 
 (defn find-antenna
   [grid]
@@ -26,7 +21,7 @@
                            (if (= value \.)
                              c
                              (update c value
-                                     #(conj (or % #{}) (idx->coord idx width)))))
+                                     #(conj (or % #{}) (idx->coord width idx)))))
                          {}
                          indexed-values)]
     (-> grid
