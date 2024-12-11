@@ -69,6 +69,15 @@
                   "Part 2: simple tweak to reducing the path info"]
        :answers [{:test 36 :submit 624}
                  {:test 81 :submit 1483}]}
+   11 {:title "Plutonian Pebbles"
+       :description "in memory -> out of memory"
+       :comments ["Fun computation puzzle"
+                  "Part 1: simple list concats"
+                  "Part 2: test ran at 45 generations"
+                  "Glad I didn't need big math here"
+                  "Counts are the way!"]
+       :answers [{:test 55312 :submit 199982}
+                 {:test 65601038650482 :submit 237149922829154}]}
    ;
    })
 
