@@ -79,8 +79,13 @@
        :answers [{:test 55312 :submit 199982}
                  {:test 65601038650482 :submit 237149922829154}]}
    12 {:title "Garden Groups"
-       :description "area + perimeter ->"
-       :comments []
+       :description "area + perimeter -> area + faces"
+       :comments ["Wow a really good challenge"
+                  "Lots of debugging with the region forming fn"
+                  "Part 1 very simple afterwards"
+                  "Part 2 stuck while looking for an algorithm"
+                  "Faces = regions of directed neighbors"
+                  "Got very lucky with the region forming fn"]
        :answers [{:test 1930 :submit 1483212}
                  {:test 1206 :test2 368 :submit 897062}]}
    ;
