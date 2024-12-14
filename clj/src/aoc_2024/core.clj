@@ -96,11 +96,17 @@
                   "Overall this is just a math problem plus fancy parsing"]
        :answers [{:test 480 :submit 29187}
                  {:test 875318608908 :submit 99968222587852}]}
-   14 {:title ""
-       :description ""
-       :comments []
-       :answers [{:test nil :submit nil}
-                 {:test nil :submit nil}]}
+   14 {:title "Restroom Redoubt"
+       :description "simulate robots -> easter egg hunt"
+       :comments ["What a fun puzzle!"
+                  "Early insight: multiply and mod the coords"
+                  "Quadrants were complicated and finicky"
+                  "Part 2: solved with row count variance, printing anomalies"
+                  "Cleaned up by looking for unique positions"]
+       :args [{:test [100 11 7] :submit [100 101 103]}
+              {:submit [10000 101 103]}]
+       :answers [{:test 12 :submit 226548000}
+                 {:submit 7753}]}
    ;
    })
 
@@ -139,8 +145,9 @@
   (let [ns-str (str "aoc-2024.day" (format "%02d" day))
         f (resolve (symbol ns-str (str "part" part)))
         input (input-for-day day variation)
+        args (concat (get-in problems-by-day [day :args (dec part) variation]) [input])
         start-ts (. System (nanoTime))
-        output (f input)
+        output (apply f args)
         ms (int (/ (double (- (. System (nanoTime)) start-ts)) 1000000.0))
         answers (get-in problems-by-day [day :answers])
         expected (get (nth answers (dec part)) variation)

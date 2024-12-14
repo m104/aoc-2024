@@ -81,3 +81,14 @@
   [width idx]
   [(rem idx width)
    (quot idx width)])
+
+(defn apply-2d
+  [op basis delta]
+  (let [[x y] basis
+        [dx dy] delta]
+    [(op x dx) (op y dy)]))
+
+(defn blank-grid
+  [width height]
+  {:width width :height height
+   :data (into [] (repeat (* width height) \.))})

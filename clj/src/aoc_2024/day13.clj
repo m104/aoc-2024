@@ -1,5 +1,5 @@
 (ns aoc-2024.day13
-  (:require [aoc-2024.helpers :refer [load-lines str->int]]))
+  (:require [aoc-2024.helpers :refer [load-lines str->int apply-2d]]))
 
 (defn parse-button
   [s]
@@ -16,12 +16,6 @@
   {:button-a (parse-button line1)
    :button-b (parse-button line2)
    :prize (parse-prize line3)})
-
-(defn apply-2d
-  [op basis delta]
-  (let [[x y] basis
-        [dx dy] delta]
-    [(op x dx) (op y dy)]))
 
 (defn remaining-presses
   [target delta]
