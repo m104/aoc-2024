@@ -63,6 +63,7 @@
 ;(part1 (load-lines "day13-test.txt"))
 ;(part1 (load-lines "day13.txt"))
 
+; ref: https://en.wikipedia.org/wiki/Cramer%27s_rule#Explicit_formulas_for_small_systems
 (defn fast-solve-machine
   [machine]
   (let [{:keys [button-a button-b prize]} machine

@@ -96,6 +96,11 @@
                   "Overall this is just a math problem plus fancy parsing"]
        :answers [{:test 480 :submit 29187}
                  {:test 875318608908 :submit 99968222587852}]}
+   14 {:title ""
+       :description ""
+       :comments []
+       :answers [{:test nil :submit nil}
+                 {:test nil :submit nil}]}
    ;
    })
 
