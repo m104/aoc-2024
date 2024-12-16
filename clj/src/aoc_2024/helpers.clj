@@ -92,3 +92,14 @@
   [width height]
   {:width width :height height
    :data (into [] (repeat (* width height) \.))})
+
+(defn find-grid-locations
+  [grid values]
+  (let [{:keys [data width height]} grid
+        indexed (mapv #(vector %1 %2) (range 0 (* width height)) data)]
+    (reduce (fn [coll [idx value]]
+              (if (contains? values value)
+                (update coll value #(conj (or % []) (idx->coord width idx)))
+                coll))
+            {}
+            indexed)))

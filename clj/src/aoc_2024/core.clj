@@ -107,6 +107,18 @@
               {:submit [10000 101 103]}]
        :answers [{:test 12 :submit 226548000}
                  {:submit 7753}]}
+   15 {:title "Warehouse Woes"
+       :description "push boxes -> push wide boxes"
+       :comments ["Started with a flat vector implementation, as before"
+                  "Part 2 looked better with sets of coords"
+                  "Verbose, but not bad implementation overall"]
+       :answers [{:test 10092 :submit 1552463}
+                 {:test 9021 :submit 1554058}]}
+   16 {:title ""
+       :description ""
+       :comments []
+       :answers [{:test nil :submit nil}
+                 {:test nil :submit nil}]}
    ;
    })
 
