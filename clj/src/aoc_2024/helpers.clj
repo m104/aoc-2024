@@ -42,6 +42,16 @@
                                  combo (combinations (disj elements e))]
                              (conj combo e))))
 
+(defn gcd [a b]
+  (loop [a a b b]
+    (cond (> a b) (recur (- a b) b)
+          (< a b) (recur a (- b a))
+          :else a)))
+
+(defn lcd [a b]
+  (* (abs a) (/ (abs b)
+                (gcd a b))))
+
 (defn lines->grid
   [lines]
   (let [height (count lines)

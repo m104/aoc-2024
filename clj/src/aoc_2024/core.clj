@@ -114,11 +114,16 @@
                   "Verbose, but not bad implementation overall"]
        :answers [{:test 10092 :submit 1552463}
                  {:test 9021 :submit 1554058}]}
-   16 {:title ""
+   16 {:title "Reindeer Maze"
        :description ""
        :comments []
-       :answers [{:test nil :submit nil}
+       :answers [{:test 7036 :test2 11048 :submit nil}
                  {:test nil :submit nil}]}
+   17 {:title "Chronospatial Computer"
+       :description "simulate a program -> crack a program"
+       :comments []
+       :answers [{:test "4,6,3,5,6,3,5,2,1,0" :submit "1,3,7,4,6,4,2,3,5"}
+                 {:test2 117440 :submit 202367025818154}]}
    ;
    })
 
